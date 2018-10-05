@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    protected $defer = false;
+    protected $defer = true;
 
     public function register()
     {

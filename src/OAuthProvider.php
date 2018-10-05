@@ -6,6 +6,13 @@ use League\OAuth2\Client\Provider\GenericProvider;
 
 class OAuthProvider extends GenericProvider
 {
+    public function __construct(array $options = [], array $collaborators = [])
+    {
+        parent::__construct($options, $collaborators);
+        if(substr($this->redirectUri, 0, 4)!=="http") {
+            $this->redirectUri = route($this->redirectUri);
+        }
+    }
     protected function getDefaultHeaders()
     {
         return array_merge(parent::getDefaultHeaders(), [

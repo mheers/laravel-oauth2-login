@@ -10,7 +10,7 @@ class OAuthProvider extends GenericProvider
     {
         parent::__construct($options, $collaborators);
         if(substr($this->redirectUri, 0, 4)!=="http") {
-            $this->redirectUri = route($this->redirectUri);
+            $this->redirectUri = route($this->redirectUri).config('oauth2login.oauth_redirect_path');
         }
     }
     protected function getDefaultHeaders()

@@ -48,7 +48,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kronthto\\LaravelOAuth2Login\\ServiceProvider"
+                "Kronthto\\LaravelOAuth2Login\\Providers\\ServiceProvider"
             ]
         }
     },

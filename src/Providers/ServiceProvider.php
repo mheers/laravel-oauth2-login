@@ -1,6 +1,6 @@
 <?php
 
-namespace Kronthto\LaravelOAuth2Login;
+namespace Kronthto\LaravelOAuth2Login\Providers;
 
 use Auth;
 use Illuminate\Auth\RequestGuard;
@@ -12,13 +12,13 @@ class ServiceProvider extends BaseServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom($this->configPath(), 'oauth2login');
+        $this->mergeConfigFrom(__DIR__.'/../Config/config.php', 'oauth2login');
     }
 
     public function boot()
     {
-        $this->publishes([$this->configPath() => config_path('oauth2login.php')]);
-        $this->loadRoutesFrom($this->resourcePath().'routes.php');
+        $this->publishes([__DIR__.'/../Config/config.php' => config_path('oauth2login.php')]);
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
         Auth::extend(config('oauth2login.auth_driver_key'), function () {
             $guard = new RequestGuard(app(AuthFromRequest::class), $this->app['request']);
@@ -27,17 +27,5 @@ class ServiceProvider extends BaseServiceProvider
 
             return $guard;
         });
-    }
-
-    /** @return string */
-    protected function configPath()
-    {
-        return $this->resourcePath().'config.php';
-    }
-
-    /** @return string */
-    protected function resourcePath()
-    {
-        return __DIR__.'/../resources/';
     }
 }

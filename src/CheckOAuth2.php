@@ -54,13 +54,15 @@ class CheckOAuth2
     protected function refreshTokenIfNecessary(AccessToken $token)
     {
         if ($token->hasExpired()) {
-            $token = $this->oauthService->getProvider()->getAccessToken('refresh_token', [
-                'refresh_token' => $token->getRefreshToken(),
-            ]);
+            $refreshToken = $token->getRefreshToken();
+            if($refreshToken) {
+                $token = $this->oauthService->getProvider()->getAccessToken('refresh_token', [
+                    'refresh_token' => $token->getRefreshToken(),
+                ]);
+            }
 
             $this->oauthService->persistAccessToken($token);
         }
-
         return $token;
     }
 
